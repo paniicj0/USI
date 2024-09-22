@@ -1,0 +1,24 @@
+﻿<Window x:Class="LangLang.View.DirectorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LangLang.View"
+        mc:Ignorable="d"
+        Loaded="DirectorWindow_Load"
+        WindowStartupLocation="CenterScreen"
+        Title="Director" Height="650" Width="800">
+    <Grid>
+        <Button x:Name="btnLogOut" Content="Log out"  HorizontalAlignment="Right" Height="35" Margin="0,20,20,0" VerticalAlignment="Top" FontSize="20" Click="btnLogOut_Click"/>
+        <Label x:Name="lblWelcome" Content="Welcome " HorizontalAlignment="Left" Height="35" Margin="20,10,0,0" VerticalAlignment="Top" FontSize="20"/>
+        <Button Content="Create tutor"  HorizontalAlignment="Center" Margin="0,-300,0,0" VerticalAlignment="Center" Height="30" FontSize="20" Width="400" Click="Button_Click"/>
+        <Button Content="Show all tutors"  HorizontalAlignment="Center" Margin="0,-200,0,0" VerticalAlignment="Center" Height="30" FontSize="20" Width="400" Click="Button_Click_1"/>
+        <Button Content="Search tutors"  HorizontalAlignment="Center" Margin="0,-100,0,0" VerticalAlignment="Center" Height="30" FontSize="20" Width="400" Click="Button_Click_2"/>
+        <Button x:Name="btnCourses" Content="Add Course"  HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Height="30" FontSize="20" Width="400" Click="btnCourses_Click"/>
+        <Button x:Name="btnExam" Content="Add Exam"  HorizontalAlignment="Center" Margin="0,100,0,0" VerticalAlignment="Center" Height="30" FontSize="20" Width="400" Click="btnAddExam_Click"/>
+        <Button x:Name="btnSendReport" Content="Send Report" HorizontalAlignment="Center"  Margin="0,300,0,0"  VerticalAlignment="Center" Width="400" Height="30" FontSize="20" Click="btnSendReport_Click"/>
+        <Button x:Name="btnFinishedExams" Content="Finished Exams" HorizontalAlignment="Center"  Margin="0,200,0,0"  VerticalAlignment="Center" Width="400" Height="30" FontSize="20" Click="btnFinishedExams_Click"/>
+        <Button x:Name="btnSendThankYouMail" Content="Send thank you mail to students" HorizontalAlignment="Center" Margin="0,400,0,0" VerticalAlignment="Center" Width="400" Height="30" FontSize="20" Click="btnSendThankYouMail_Click"/>
+
+    </Grid>
+</Window>

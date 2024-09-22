@@ -1,0 +1,15 @@
+﻿<Window x:Class="LangLang.View.StudentAcceptWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LangLang.View"
+        mc:Ignorable="d"
+        Title="StudentAccept" Height="200" Width="500" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Label Content="Are you sure you want to accept?" HorizontalAlignment="Center" Height="47" Margin="0,45,0,0" VerticalAlignment="Top"  FontWeight="Bold" FontSize="20"/>
+        <Button Content="Yes" HorizontalAlignment="Left" Height="20" Margin="113,122,0,0" VerticalAlignment="Top" Width="123" Click="Button_Click"/>
+        <Button Content="No" HorizontalAlignment="Left" Height="20" Margin="267,122,0,0" VerticalAlignment="Top" Width="123" Click="Button_Click_1"/>
+
+    </Grid>
+</Window>

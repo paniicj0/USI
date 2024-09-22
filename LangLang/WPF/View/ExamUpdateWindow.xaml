@@ -1,0 +1,57 @@
+﻿<Window x:Class="LangLang.View.ExamUpdateWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        ResizeMode="NoResize"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LangLang.View"
+        mc:Ignorable="d"
+        Title="Update Exam" Height="350" Width="320" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen">
+    <Grid Margin="0,10,0,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="8*"/>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="7*"/>
+            <ColumnDefinition Width="17*"/>
+        </Grid.ColumnDefinitions>
+        <Label x:Name="lblLanguage" Content="Language:" HorizontalAlignment="Left" Margin="13,22,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.078,-2.117" Grid.ColumnSpan="3" Grid.Column="2" Width="89"/>
+        <Label Content="Language level:" HorizontalAlignment="Left" Margin="13,62,0,0" VerticalAlignment="Top" Grid.ColumnSpan="3" Grid.Column="2"/>
+        <Label Content="Number of students:" HorizontalAlignment="Left" Margin="13,98,0,0" VerticalAlignment="Top" Grid.ColumnSpan="3" Grid.Column="2"/>
+        <Label Content="Exam date:" HorizontalAlignment="Left" Margin="13,138,0,0" VerticalAlignment="Top" Grid.ColumnSpan="3" Grid.Column="2"/>
+        <Label Content="Exam duration:" HorizontalAlignment="Left" Margin="13,169,0,0" VerticalAlignment="Top" Grid.ColumnSpan="3" Grid.Column="2"/>
+        <Label Content="Exam time:" HorizontalAlignment="Left" Margin="13,200,0,0" VerticalAlignment="Top" Grid.ColumnSpan="3" Grid.Column="2"/>
+
+        <ComboBox x:Name="cbLanguage" HorizontalAlignment="Left" Margin="70,26,0,0" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="4" Grid.Column="4"/>
+        <ComboBox x:Name="cbLanguageLevel" HorizontalAlignment="Left" Margin="70,64,0,0" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="4" Grid.Column="4"/>
+        <TextBox x:Name="tbNumOfStudents" HorizontalAlignment="Left" Margin="70,102,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="4" Grid.Column="4"/>
+        <TextBox HorizontalAlignment="Left" Margin="70,173,0,0" TextWrapping="Wrap" Text="4" VerticalAlignment="Top" Width="120" IsEnabled="False" Grid.ColumnSpan="4" Grid.Column="4"/>
+        <DatePicker x:Name="dtpExam" HorizontalAlignment="Left" Margin="70,138,0,0" VerticalAlignment="Top" Grid.Column="4" Grid.ColumnSpan="4" Width="120">
+            <DatePicker.Resources>
+                <Style TargetType="DatePickerTextBox">
+                    <Setter Property="IsReadOnly" Value="True" />
+                </Style>
+            </DatePicker.Resources>
+        </DatePicker>
+        <ComboBox x:Name="cbExamTime" HorizontalAlignment="Left" Margin="70,208,0,0" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="4" Grid.Column="4">
+            <!-- Popunjavanje ComboBox-a sa vremenima -->
+            <ComboBoxItem Content="08:00"/>
+            <ComboBoxItem Content="09:00"/>
+            <ComboBoxItem Content="10:00"/>
+            <ComboBoxItem Content="11:00"/>
+            <ComboBoxItem Content="12:00"/>
+            <ComboBoxItem Content="13:00"/>
+            <ComboBoxItem Content="14:00"/>
+            <ComboBoxItem Content="15:00"/>
+            <ComboBoxItem Content="16:00"/>
+            <ComboBoxItem Content="17:00"/>
+            <ComboBoxItem Content="18:00"/>
+            <ComboBoxItem Content="19:00"/>
+            <ComboBoxItem Content="20:00"/>
+        </ComboBox>
+        <Button x:Name="btnSubmit" Content="Submit" HorizontalAlignment="Left" Margin="13,250,-60,0" VerticalAlignment="Top" Width="100" Click="btnSubmit_Click" Grid.Column="4" Grid.ColumnSpan="2"/>
+    </Grid>
+</Window>

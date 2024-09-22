@@ -1,0 +1,35 @@
+﻿<Window x:Class="LangLang.View.DirectorSearchTutorsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LangLang.View"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Title="DirectorSearchTutorsWindow" Height="450" Width="800">
+    <Grid>
+        <StackPanel Orientation="Vertical" Margin="20">
+            <!-- Language -->
+            <Label Content="Language:"/>
+            <ComboBox x:Name="cbLanguage" Width="200" Margin="5"/>
+            <!--  <TextBox x:Name="tbLanguage" Width="200" Margin="5"/>-->
+
+
+            <!-- Language Level -->
+            <Label Content="Language Level:"/>
+            <ComboBox x:Name="cbLanguageLevel" Width="200" Margin="5"/>
+            <!-- <TextBox x:Name="tbLanguageLevel" Width="200" Margin="5"/>-->
+
+            <!-- Date Added -->
+            <Label Content="Date Added:"/>
+            <DatePicker x:Name="dpDateAdded" Width="200" Margin="5"/>
+
+            <!-- Search Button -->
+            <Button Content="Search" Click="btnSearch_Click" Margin="5,10,5,5"/>
+            <Button Content="Clear" Click="btnClear_Click" Margin="5,5,5,10"/>
+            <!-- DataGrid to display searched tutors -->
+            <DataGrid x:Name="dgvSearchedTutors" AutoGenerateColumns="True" Margin="0,20,0,0"/>
+        </StackPanel>
+    </Grid>
+</Window>
+

@@ -1,0 +1,15 @@
+﻿<Window x:Class="LangLang.View.TutorDeleteWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LangLang.View"
+        mc:Ignorable="d"
+        Title="TutorDeleteWindow" Height="250" Width="500" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Label Content="Are you sure you want to delete the tutor?" HorizontalAlignment="Center" Height="47" Margin="0,59,0,0" VerticalAlignment="Top"  FontWeight="Bold" FontSize="20"/>
+        <Button Content="Yes" HorizontalAlignment="Left" Height="20" Margin="91,142,0,0" VerticalAlignment="Top" Width="100" Click="Button_Click"/>
+        <Button Content="No" HorizontalAlignment="Left" Height="20" Margin="250,142,0,0" VerticalAlignment="Top" Width="100" Click="Button_Click_1"/>
+
+    </Grid>
+</Window>

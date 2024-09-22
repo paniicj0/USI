@@ -1,0 +1,17 @@
+﻿<Window x:Class="LangLang.View.NotificationsForStudentWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LangLang.View"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Loaded="NotificationsForStudentWindow_Load"
+        Title="NotificationsForStudentWindow" Height="450" Width="800">
+    <Grid>
+        <DataGrid x:Name="dgNotifications" Height="200" Margin="0,20,0,0" HorizontalAlignment="Center"/>
+        <Button x:Name="btnRead" Content="Mark as read" HorizontalAlignment="Center" Margin="0,360,0,0" VerticalAlignment="Top" Click="btnRead_Click"/>
+        <Label Content="Your notifications: " HorizontalAlignment="Center" Margin="0,60,0,0" VerticalAlignment="Top" Height="35" FontSize="20"/>
+
+    </Grid>
+</Window>

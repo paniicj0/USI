@@ -1,0 +1,240 @@
+﻿using LangLang.Controllers;
+using LangLang.Model;
+using LangLang.Repository;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
+using static LangLang.ModelEnum.LanguageEnum;
+using static LangLang.ModelEnum.LanguageLevelEnum;
+using USIProject.View;
+using System.ComponentModel;
+using System.Data;
+using LangLang.Reports;
+using System.Net.Mail;
+
+namespace LangLang.View
+{
+    /// <summary>
+    /// Interaction logic for ExamsFinishedDirectorWindow.xaml
+    /// </summary>
+    public partial class ExamsFinishedDirectorWindow : Window
+    {
+        ExamController examController;
+        private ExamRepository examRepository;
+        public int selectedId;
+        public int selectedNumOfStudents;
+        public DateTime selectedExamDate;
+        public Language selectedLanguage;
+        public LanguageLevel selectedLanguageLevel;
+        private int selectedExamDuration;
+        private int selectedNumOfAppliedStudents;
+        private Director director;
+        public DirectorWindow directorWindow;
+        List<Exam> exams;
+        public ExamsFinishedDirectorWindow(Director director)
+        {
+            InitializeComponent();
+            this.director = director;
+            examRepository = ExamRepository.GetInstance();
+        }
+        private void btnAdd_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+           // ExamCreateWindow createExamForm = new ExamCreateWindow(tutor);
+            //createExamForm.ShowDialog();
+        }
+
+        private void btnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            if (dgvExam.SelectedItem != null)
+            {
+                DataRowView selectedRow = (DataRowView)dgvExam.SelectedItem;
+                int examId = (int)selectedRow["Id"];
+                TimeSpan timeUntilExam = selectedExamDate - DateTime.Today;
+                if (timeUntilExam.TotalDays <= 14)
+                {
+                    MessageBox.Show("You cannot delete an exam if there are less than 14 days left until the exam starts.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                examController.Delete(examId);
+
+                LoadDataFromCSV();
+            }
+            else
+            {
+                MessageBox.Show("First select the row that you want to delete.", "Warning!", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
+        private void ExamsFinishedDirectorWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            ExamRepository examRepository = ExamRepository.GetInstance();
+            //seting possibility to sort collumns 
+            foreach (DataGridColumn column in dgvExam.Columns)
+            {
+                column.CanUserSort = true;
+            }
+
+            LoadDataFromCSV();
+        }
+
+        public void LoadDataFromCSV()
+        {
+
+            DataTable dataTable = new DataTable();
+
+            dataTable.Columns.Add("Id", typeof(int));
+            dataTable.Columns.Add("Language", typeof(string));
+            dataTable.Columns.Add("LanguageLevel", typeof(string));
+            dataTable.Columns.Add("NumOfStudents", typeof(int));
+            dataTable.Columns.Add("ExamDate", typeof(DateTime));
+            dataTable.Columns.Add("ExamDuration", typeof(int));
+            dataTable.Columns.Add("NumOfAppliedStudents", typeof(int));
+
+            examController = new ExamController();
+            List<Exam> exams = examController.GetAll();
+
+            DateTime currentDate = DateTime.Now;
+            foreach (Exam exam in exams)
+            {
+                
+            
+                    DateTime endDate = exam.ExamDate.AddHours(exam.ExamDuration);
+                    if (endDate <= DateTime.Today)
+                    {
+                        string language = exam.Language.ToString();
+                        string languageLevel = exam.LanguageLevel.ToString();
+                        dataTable.Rows.Add(
+                            exam.Id,
+                            language,
+                            languageLevel,
+                            exam.NumOfStudents,
+                            exam.ExamDate,
+                            exam.ExamDuration,
+                            exam.NumberOfAppliedStudents
+                        );
+
+                    }
+            }
+
+            dgvExam.ItemsSource = dataTable.DefaultView;
+            dgvExam.UnselectAllCells();
+        }
+
+
+        private void dgvExam_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
+        {
+            if (dgvExam.SelectedItem != null)
+            {
+                DataRowView selectedRow = (DataRowView)dgvExam.SelectedItem;
+                selectedId = (int)selectedRow["Id"];
+                selectedExamDate = (DateTime)selectedRow["ExamDate"];
+            }
+        }
+
+        private void btnSearch_Click(object sender, RoutedEventArgs e)
+        {
+            string searchTerm = tbSearch.Text;
+
+            ICollectionView view = CollectionViewSource.GetDefaultView(dgvExam.ItemsSource);
+            if (view != null)
+            {
+                view.Filter = item =>
+                {
+                    DataRowView row = item as DataRowView;
+                    if (row != null)
+                    {
+                        foreach (var cellValue in row.Row.ItemArray)
+                        {
+                            if (cellValue.ToString().Contains(searchTerm))
+                                return true;
+                        }
+                    }
+                    return false;
+                };
+            }
+        }
+
+        private void tbSearch_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string searchTerm = tbSearch.Text;
+
+            if (dgvExam.ItemsSource is DataView dataView)
+            {
+                DataTable dt = dataView.Table;
+                if (!string.IsNullOrEmpty(searchTerm))
+                {
+                    string[] searchTerms = searchTerm.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+                    string filter = GetFilterExpression(dt, searchTerms);
+                    dataView.RowFilter = filter;
+                }
+                else
+                {
+                    dataView.RowFilter = "";
+                }
+            }
+        }
+
+        private string GetFilterExpression(DataTable dt, string[] searchTerms)
+        {
+            List<string> filters = new List<string>();
+
+            foreach (string term in searchTerms)
+            {
+                string termFilter = string.Join(" OR ", dt.Columns.Cast<DataColumn>()
+                                                    .Select(c => $"CONVERT([{c.ColumnName}], 'System.String') LIKE '%{term}%'"));
+                filters.Add(termFilter);
+            }
+
+            string combinedFilter = string.Join(" AND ", filters);
+
+            return combinedFilter;
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            base.OnClosing(e);
+
+            if (!e.Cancel && this.IsVisible)
+            {
+                e.Cancel = true;
+                this.Hide();
+                directorWindow = new DirectorWindow(director);
+                directorWindow.Show();
+            }
+        }
+
+        private void btnBack_Click(object sender, RoutedEventArgs e)
+        {
+            DirectorWindow directorWindow = new DirectorWindow(director);
+            directorWindow.ShowDialog();
+        }
+
+        private void btnSendEmails_Click(object sender, RoutedEventArgs e)
+        {
+             try
+             {
+                 var report = new ExamResultsReport(director);
+                 report.GenerateAndSendReports(selectedId);
+                 MessageBox.Show("Report has been sent successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+             }
+             catch (Exception ex)
+             {
+                 MessageBox.Show($"An error occurred while sending the report: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+             }
+
+        }
+
+    }
+}
